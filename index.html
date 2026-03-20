@@ -1,0 +1,67 @@
+<!--
+  ╔══════════════════════════════════════════════════╗
+  ║  Hey, you found the source code!                 ║
+  ║  Try typing 'help' in the terminal below.        ║
+  ║  Or if you're really adventurous, try 'sudo'.    ║
+  ╚══════════════════════════════════════════════════╝
+-->
+<!DOCTYPE html>
+<html lang="en" data-theme="green">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eric Liu | Software Engineer</title>
+  <meta name="description" content="Interactive terminal portfolio for Eric Liu — Software Engineer">
+  <meta property="og:title" content="Eric Liu | Software Engineer">
+  <meta property="og:description" content="Interactive terminal portfolio — type commands to explore.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0a0e14">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/terminal.css">
+</head>
+<body>
+  <div id="terminal-window">
+    <div id="terminal-header">
+      <div class="header-dots">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+      </div>
+      <div class="header-title">eric@liu:~$</div>
+      <div class="header-spacer"></div>
+    </div>
+    <div id="terminal-body">
+      <div id="output" aria-live="polite" role="log">
+        <div id="input-line">
+          <span class="prompt">visitor@ericliu:~$&nbsp;</span>
+          <div class="input-wrapper">
+            <span id="input-display"></span>
+            <span id="cursor" class="blink"></span>
+            <input
+              type="text"
+              id="terminal-input"
+              autocomplete="off"
+              autocapitalize="none"
+              autocorrect="off"
+              spellcheck="false"
+              aria-label="Terminal input"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="mobile-buttons" aria-label="Quick commands">
+    <button data-cmd="help">help</button>
+    <button data-cmd="about">about</button>
+    <button data-cmd="projects">projects</button>
+    <button data-cmd="experience">experience</button>
+    <button data-cmd="skills">skills</button>
+    <button data-cmd="contact">contact</button>
+  </div>
+  <script src="js/commands.js"></script>
+  <script src="js/terminal.js"></script>
+</body>
+</html>
