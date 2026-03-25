@@ -11,57 +11,78 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eric Liu | Software Engineer</title>
-  <meta name="description" content="Interactive terminal portfolio for Eric Liu — Software Engineer">
+  <meta name="description" content="Interactive terminal portfolio for Eric Liu — Software Engineer. Type commands to explore my experience, projects, and skills.">
   <meta property="og:title" content="Eric Liu | Software Engineer">
   <meta property="og:description" content="Interactive terminal portfolio — type commands to explore.">
   <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Eric Liu | Software Engineer">
+  <meta name="twitter:description" content="Interactive terminal portfolio — type commands to explore.">
   <meta name="theme-color" content="#0a0e14">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>></text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/terminal.css">
 </head>
 <body>
-  <div id="terminal-window">
-    <div id="terminal-header">
-      <div class="header-dots">
-        <span class="dot dot-red"></span>
-        <span class="dot dot-yellow"></span>
-        <span class="dot dot-green"></span>
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <main>
+    <div id="terminal-window" role="application">
+      <div id="terminal-header">
+        <div class="header-dots" aria-hidden="true">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+        </div>
+        <div class="header-title">eric@liu:~$</div>
+        <div class="header-spacer"></div>
       </div>
-      <div class="header-title">eric@liu:~$</div>
-      <div class="header-spacer"></div>
-    </div>
-    <div id="terminal-body">
-      <div id="output" aria-live="polite" role="log">
-        <div id="input-line">
-          <span class="prompt">visitor@ericliu:~$&nbsp;</span>
-          <div class="input-wrapper">
-            <span id="input-display"></span>
-            <span id="cursor" class="blink"></span>
-            <input
-              type="text"
-              id="terminal-input"
-              autocomplete="off"
-              autocapitalize="none"
-              autocorrect="off"
-              spellcheck="false"
-              aria-label="Terminal input"
-            >
+      <div id="terminal-body">
+        <div id="output" aria-live="polite" role="log">
+          <div id="input-line">
+            <span class="prompt">visitor@ericliu:~$&nbsp;</span>
+            <div class="input-wrapper">
+              <span id="input-display"></span>
+              <span id="cursor" class="blink"></span>
+              <input
+                type="text"
+                id="terminal-input"
+                autocomplete="off"
+                autocapitalize="none"
+                autocorrect="off"
+                spellcheck="false"
+                aria-label="Terminal command input"
+              >
+            </div>
           </div>
         </div>
+        <div id="scroll-indicator" aria-hidden="true">&#8595;</div>
       </div>
     </div>
-  </div>
-  <div id="mobile-buttons" aria-label="Quick commands">
-    <button data-cmd="help">help</button>
-    <button data-cmd="about">about</button>
-    <button data-cmd="projects">projects</button>
-    <button data-cmd="experience">experience</button>
-    <button data-cmd="skills">skills</button>
-    <button data-cmd="contact">contact</button>
-  </div>
-  <script src="js/commands.js"></script>
-  <script src="js/terminal.js"></script>
+  </main>
+  <nav id="mobile-buttons" aria-label="Quick commands">
+    <div class="btn-row btn-primary">
+      <button data-cmd="about">about</button>
+      <button data-cmd="projects">projects</button>
+      <button data-cmd="experience">experience</button>
+      <button data-cmd="skills">skills</button>
+    </div>
+    <div class="btn-row btn-secondary">
+      <button data-cmd="contact">contact</button>
+      <button data-cmd="education">education</button>
+      <button data-cmd="resume">resume</button>
+      <button data-cmd="theme">theme</button>
+      <button data-cmd="clear">clear</button>
+    </div>
+  </nav>
+  <noscript>
+    <div style="padding:2em;text-align:center;font-family:monospace;color:#00ff41;background:#0a0e14;min-height:100vh;display:flex;align-items:center;justify-content:center;">
+      <p>This interactive terminal portfolio requires JavaScript to run.<br>Please enable JavaScript and reload the page.</p>
+    </div>
+  </noscript>
+  <script src="js/commands.js" defer></script>
+  <script src="js/background.js" defer></script>
+  <script src="js/terminal.js" defer></script>
 </body>
 </html>

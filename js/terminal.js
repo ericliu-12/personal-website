@@ -5,11 +5,14 @@
   const inputDisplay = document.getElementById('input-display');
   const cursor = document.getElementById('cursor');
   const terminalBody = document.getElementById('terminal-body');
+  const scrollIndicator = document.getElementById('scroll-indicator');
 
   // ── State ──
   let commandHistory = JSON.parse(localStorage.getItem('terminal-history') || '[]');
   let historyIndex = -1;
   let currentInput = '';
+  let userScrolledUp = false;
+  const MAX_OUTPUT_LINES = 500;
 
   // ── Theme persistence ──
   const savedTheme = localStorage.getItem('terminal-theme');
@@ -19,7 +22,28 @@
 
   // ── Output helpers ──
   function scrollToBottom() {
-    terminalBody.scrollTop = terminalBody.scrollHeight;
+    userScrolledUp = false;
+    terminalBody.scrollTo({
+      top: terminalBody.scrollHeight,
+      behavior: 'smooth',
+    });
+    if (scrollIndicator) scrollIndicator.classList.remove('visible');
+  }
+
+  // Track user scroll position
+  terminalBody.addEventListener('scroll', () => {
+    const distFromBottom = terminalBody.scrollHeight - terminalBody.scrollTop - terminalBody.clientHeight;
+    if (distFromBottom > 60) {
+      userScrolledUp = true;
+      if (scrollIndicator) scrollIndicator.classList.add('visible');
+    } else {
+      userScrolledUp = false;
+      if (scrollIndicator) scrollIndicator.classList.remove('visible');
+    }
+  });
+
+  if (scrollIndicator) {
+    scrollIndicator.addEventListener('click', scrollToBottom);
   }
 
   const inputLine = document.getElementById('input-line');
@@ -36,9 +60,10 @@
     if (delay !== undefined) {
       div.style.animationDelay = delay + 'ms';
     }
-    // Insert before the input line so it always stays last
     output.insertBefore(div, inputLine);
-    scrollToBottom();
+    if (!userScrolledUp) {
+      terminalBody.scrollTop = terminalBody.scrollHeight;
+    }
   }
 
   function printLines(lines, baseDelay) {
@@ -47,6 +72,7 @@
       const delay = reducedMotion ? 0 : (baseDelay || 0) + i * 25;
       printLine(line, null, delay);
     });
+    cleanupOldLines();
   }
 
   function printCommandEcho(cmd) {
@@ -60,6 +86,19 @@
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
+  }
+
+  // ── DOM cleanup for long sessions ──
+  function cleanupOldLines() {
+    const lines = output.querySelectorAll('.line');
+    if (lines.length > MAX_OUTPUT_LINES) {
+      const toRemove = lines.length - MAX_OUTPUT_LINES;
+      for (let i = 0; i < toRemove; i++) {
+        if (lines[i] !== inputLine) {
+          lines[i].remove();
+        }
+      }
+    }
   }
 
   // ── Levenshtein distance for fuzzy matching ──
@@ -95,7 +134,6 @@
     const trimmed = raw.trim();
     if (!trimmed) return;
 
-    // Save to history
     if (commandHistory[commandHistory.length - 1] !== trimmed) {
       commandHistory.push(trimmed);
       if (commandHistory.length > 50) commandHistory.shift();
@@ -104,16 +142,11 @@
     historyIndex = -1;
     currentInput = '';
 
-    // Echo the command
     printCommandEcho(trimmed);
 
-    // Parse
     const parts = trimmed.split(/\s+/);
-    let cmdName = parts[0].toLowerCase();
+    const cmdName = parts[0].toLowerCase();
     const args = parts.slice(1);
-
-    // Special case: "rm -rf /" should route to 'rm'
-    // Already handled by splitting
 
     const cmd = COMMANDS[cmdName];
     if (cmd) {
@@ -122,7 +155,6 @@
         printLines(result);
       }
     } else {
-      // Fuzzy match
       const suggestion = findClosestCommand(cmdName);
       printLine({ html: `<span class="error">Command not found: ${escapeHTML(cmdName)}</span>` });
       if (suggestion) {
@@ -132,7 +164,9 @@
       }
     }
 
-    scrollToBottom();
+    if (!userScrolledUp) {
+      terminalBody.scrollTop = terminalBody.scrollHeight;
+    }
   }
 
   // ── Tab autocomplete ──
@@ -141,14 +175,12 @@
     const matches = Object.keys(COMMANDS).filter(c => c.startsWith(partial.toLowerCase()));
     if (matches.length === 1) return matches[0];
     if (matches.length > 1) {
-      // Find common prefix
       let prefix = matches[0];
       for (const m of matches) {
         while (!m.startsWith(prefix)) {
           prefix = prefix.slice(0, -1);
         }
       }
-      // Show options
       printCommandEcho(partial);
       printLine({ html: `<span class="info">${matches.join('  ')}</span>` });
       return prefix.length > partial.length ? prefix : null;
@@ -218,7 +250,6 @@
 
   // ── Focus management ──
   terminalBody.addEventListener('click', (e) => {
-    // Don't steal focus if clicking a link
     if (e.target.tagName === 'A') return;
     inputEl.focus();
   });
@@ -235,51 +266,93 @@
     btn.addEventListener('click', () => {
       const cmd = btn.getAttribute('data-cmd');
       executeCommand(cmd);
-      inputEl.focus();
+      // On mobile, scroll to show output, then focus
+      setTimeout(() => {
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+        inputEl.focus();
+      }, 50);
     });
   });
+
+  // ── Mobile virtual keyboard handling ──
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', () => {
+      // When keyboard opens/closes, ensure input stays visible
+      setTimeout(() => {
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+      }, 100);
+    });
+  }
 
   // ── Boot Sequence ──
   function boot() {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const bootLines = [
+    if (reducedMotion) {
+      // Instant boot for reduced motion
+      printLine('[BOOT] System initialized.', 'info');
+      for (const line of ASCII_BANNER) {
+        printLine({ html: `<span style="color:var(--accent)">${escapeHTML(line)}</span>` });
+      }
+      printLine({ html: 'Welcome! Type <span style="color:var(--accent)">help</span> to see available commands.' });
+      printLine('');
+      inputEl.focus();
+      return;
+    }
+
+    // Animated boot sequence with progress bar
+    const steps = [
       { text: '[BOOT] Initializing system...', delay: 0 },
-      { text: '[BOOT] Loading modules... done.', delay: reducedMotion ? 0 : 400 },
-      { text: '[BOOT] Establishing connection... done.', delay: reducedMotion ? 0 : 800 },
+      { text: '[BOOT] Loading modules...', delay: 300 },
+      { text: '[BOOT] Establishing connection...', delay: 600 },
     ];
 
-    const asciiArt = [
-      '',
-      '      ███████╗██╗',
-      '      ██╔════╝██║     Welcome to EricLiu OS v1.0',
-      '      █████╗  ██║     ────────────────────────────',
-      '      ██╔══╝  ██║     Type \'help\' to get started.',
-      '      ███████╗███████╗',
-      '      ╚══════╝╚══════╝',
-      '',
+    steps.forEach(({ text, delay }) => {
+      setTimeout(() => printLine(text, 'info'), delay);
+    });
+
+    // Progress bar animation
+    const progressStages = [
+      { bar: '[██░░░░░░░░] 10%', delay: 900 },
+      { bar: '[████░░░░░░] 40%', delay: 1050 },
+      { bar: '[███████░░░] 70%', delay: 1200 },
+      { bar: '[██████████] 100%', delay: 1350 },
     ];
 
-    bootLines.forEach(({ text, delay }) => {
+    let progressLine = null;
+    progressStages.forEach(({ bar, delay }) => {
       setTimeout(() => {
-        printLine(text, 'info');
+        if (progressLine) progressLine.remove();
+        progressLine = document.createElement('div');
+        progressLine.classList.add('line', 'progress-bar');
+        progressLine.textContent = bar;
+        output.insertBefore(progressLine, inputLine);
+        terminalBody.scrollTop = terminalBody.scrollHeight;
       }, delay);
     });
 
-    const artStart = reducedMotion ? 0 : 1300;
+    // ASCII art after progress
     setTimeout(() => {
-      asciiArt.forEach((line, i) => {
-        const d = reducedMotion ? 0 : i * 40;
+      if (progressLine) {
+        progressLine.textContent = '[BOOT] Ready.';
+        progressLine.classList.remove('progress-bar');
+        progressLine.classList.add('info');
+      }
+
+      ASCII_BANNER.forEach((line, i) => {
         setTimeout(() => {
           printLine({ html: `<span style="color:var(--accent)">${escapeHTML(line)}</span>` });
-        }, d);
+        }, i * 35);
       });
-    }, artStart);
 
-    // Focus input after boot
-    setTimeout(() => {
-      inputEl.focus();
-    }, reducedMotion ? 100 : artStart + asciiArt.length * 40 + 200);
+      const welcomeDelay = ASCII_BANNER.length * 35 + 100;
+      setTimeout(() => {
+        printLine('');
+        printLine({ html: 'Welcome! Type <span style="color:var(--accent)">help</span> to see available commands.' });
+        printLine('');
+        inputEl.focus();
+      }, welcomeDelay);
+    }, 1500);
   }
 
   boot();
