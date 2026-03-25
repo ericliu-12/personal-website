@@ -61,16 +61,15 @@ registerCommand('about', 'About Eric Liu', () => {
     { html: `<div class="output-card">
       <div class="card-header">
         <span class="card-title">Eric Liu</span>
-        <span class="card-subtitle">Software Engineer</span>
+        <span class="card-subtitle">Software Engineer &middot; AWS Certified</span>
       </div>
       <hr class="card-divider">
       <div class="card-body">
-        <div>CS student at Texas A&M University</div>
-        <div>Minor in Statistics and English &middot; Graduating May 2026</div>
+        <div>Software Engineer with production experience in <strong style="color:var(--accent)">CI/CD infrastructure</strong>, <strong style="color:var(--accent)">cloud services (AWS/Azure)</strong>, and <strong style="color:var(--accent)">full-stack development</strong>. Currently at Capital One, building tooling that supports 10,000+ engineers.</div>
         <br>
-        <div>I build software that solves real problems — from CI/CD pipelines at Capital One to music discovery apps. Passionate about distributed systems, machine learning, and clean engineering.</div>
+        <div>B.S. Computer Science from Texas A&M University (3.91 GPA) with minors in Statistics and English. Background spans distributed systems, machine learning, and enterprise .NET — comfortable shipping code in Go, Python, TypeScript, and C#.</div>
         <br>
-        <div style="color:var(--text-dim)">When I'm not coding: ultimate frisbee, running marathons, reading classic literature.</div>
+        <div style="color:var(--text-dim)">Interests: ultimate frisbee, marathon running, classic literature.</div>
         <hr class="card-divider">
         <div class="quick-links">
           <a href="https://github.com/ericliu-12" target="_blank" rel="noopener">GitHub</a>
@@ -87,51 +86,51 @@ registerCommand('about', 'About Eric Liu', () => {
 // ── experience ──
 const EXPERIENCE_DATA = {
   'capitalone': {
-    title: 'Software Engineer Intern',
+    title: 'Software Engineer',
     company: 'Capital One',
     date: 'June 2025 – Present',
     location: 'Plano, TX',
     bullets: [
-      'Enhanced Capital One\'s CI/CD pipeline, supporting 10,000+ engineers and 2,000+ applications',
-      'Deployed an OPA policy bundle as a Docker container on AWS Fargate, cutting policy update build time by 80%',
-      'Developed a fault-detection pipeline step in Go, reducing build errors in the CI/CD pipeline by 5%',
-      'Integrated New Relic metrics for containerized application, improving visibility into policy performance',
-      'Achieved 90% test coverage by writing unit and integration tests for pipeline enhancements',
+      'Own and enhance enterprise CI/CD pipeline infrastructure serving 10,000+ engineers across 2,000+ applications',
+      'Architected and deployed an OPA policy bundle as a containerized service on AWS Fargate, reducing policy update build time by 80%',
+      'Built a fault-detection pipeline step in Go that cut CI/CD build errors by 5% across the platform',
+      'Instrumented containerized services with New Relic observability, enabling real-time policy performance monitoring',
+      'Maintained 90% test coverage through comprehensive unit and integration testing of pipeline components',
     ],
   },
   'finthrive': {
-    title: 'Software Engineer Intern',
+    title: 'Software Engineer',
     company: 'FinThrive',
     date: 'May 2024 – November 2024',
     location: 'Plano, TX',
     bullets: [
-      'Implemented Letter Service using .NET, automating generation of 1,000+ patient-facing documents weekly',
-      'Optimized Azure CI/CD pipelines for faster deployments, reducing build and deployment time by 40%',
-      'Queried and processed billing data from 50+ facilities using Microsoft SQL Server',
-      'Integrated Letter Service with existing Payment Estimator backend and frontend for end-to-end functionality',
-      'Engaged in Agile processes (sprint planning, daily stand-ups, retrospectives) to ensure timely delivery',
+      'Built a .NET Letter Service from the ground up, automating generation of 1,000+ patient-facing documents weekly',
+      'Optimized Azure CI/CD pipelines, cutting build and deployment time by 40% across multiple teams',
+      'Designed and executed SQL Server queries processing billing data from 50+ healthcare facilities',
+      'Integrated Letter Service end-to-end with the existing Payment Estimator backend and frontend',
+      'Shipped features on a sprint cadence within an Agile team (planning, standups, retrospectives)',
     ],
   },
   'engr': {
-    title: 'Web Officer',
+    title: 'Lead Web Developer',
     company: 'ENGR TA Organization',
     date: 'February 2024 – Present',
     location: 'College Station, TX',
     bullets: [
-      'Launched the organization website using Next.js, improving responsiveness and reaching 4,000+ users',
-      'Integrated the Google Calendar API to automate display of 15+ monthly TA events',
-      'Implemented dynamic routing and server-side rendering to optimize load times and SEO',
+      'Designed and launched the organization\'s Next.js website, serving 4,000+ active users',
+      'Integrated Google Calendar API to dynamically display 15+ monthly events with zero manual upkeep',
+      'Implemented dynamic routing and server-side rendering for sub-second load times and strong SEO',
     ],
   },
   '180dc': {
-    title: 'Consultant',
+    title: 'Technology Consultant',
     company: '180 Degree Consulting',
     date: 'September 2024 – Present',
     location: 'College Station, TX',
     bullets: [
-      'Provided consulting services to nonprofit organizations, enhancing operational efficiency',
-      'Built a centralized database for 1,000+ manual records, cutting data retrieval time by 90%',
-      'Delivered client presentations that led to cost-saving strategies projected to reduce overhead by 20%',
+      'Delivered technology consulting engagements for nonprofit clients, driving measurable operational improvements',
+      'Engineered a centralized database replacing 1,000+ manual records, reducing data retrieval time by 90%',
+      'Presented data-driven recommendations that led to projected 20% reduction in client overhead costs',
     ],
   },
 };
@@ -180,13 +179,13 @@ registerCommand('experience', 'Work experience — usage: experience [company]',
 const PROJECTS_DATA = {
   'curious-collections': {
     name: 'Curious Collections',
-    tech: ['React', 'TypeScript', 'Flask', 'Express', 'TailwindCSS', 'Notion'],
+    tech: ['React', 'TypeScript', 'Flask', 'Express', 'TailwindCSS', 'Notion API'],
     date: 'March 2024',
     bullets: [
-      'Web application for music discovery with a Notion-powered catalog of 5,000 albums',
-      'Song recommendation algorithm using TF-IDF vectorization to tailor suggestions',
-      'Integrated Spotify and AUDD APIs for music data and song recognition',
-      'Dual-backend system using Flask and Express.js for complex API requests',
+      'Full-stack music discovery platform backed by a 5,000-album Notion-powered catalog',
+      'Implemented TF-IDF vectorization recommendation engine for personalized album suggestions',
+      'Integrated Spotify and AUDD APIs for real-time music data and audio recognition',
+      'Architected a dual-backend system (Flask + Express.js) to handle complex API orchestration',
     ],
   },
   'whimsiway': {
@@ -194,10 +193,10 @@ const PROJECTS_DATA = {
     tech: ['React', 'Flask', 'scikit-learn', 'pandas', 'Mapbox', 'Nominatim'],
     date: 'February 2024',
     bullets: [
-      'Vehicle safety dashboard with route finder to identify accident hotspots',
-      'Folium maps to visualize accident clusters using DBSCAN and k-means algorithms',
-      'Mapbox API integration for versatile navigation in accident-prone areas',
-      'Severity model with random forest classifier — 95% accuracy',
+      'Built a vehicle safety analytics dashboard with real-time route risk assessment',
+      'Applied DBSCAN and k-means clustering to visualize accident hotspots on Folium maps',
+      'Integrated Mapbox API for turn-by-turn navigation with hazard-aware routing',
+      'Trained a random forest severity classifier achieving 95% prediction accuracy',
     ],
   },
 };
@@ -301,20 +300,20 @@ registerCommand('education', 'Education details', () => {
     { html: `<div class="output-card">
       <div class="card-header">
         <span class="card-title">Texas A&M University</span>
-        <span class="card-subtitle">Aug 2022 – May 2026</span>
+        <span class="card-subtitle">Graduated May 2026</span>
       </div>
-      <div style="color:var(--accent)">B.S. Computer Science &middot; GPA: 3.913</div>
-      <div style="color:var(--text-dim);margin-bottom:8px">Minor in Statistics and English &middot; College Station, TX</div>
+      <div style="color:var(--accent)">B.S. Computer Science &middot; 3.91 GPA</div>
+      <div style="color:var(--text-dim);margin-bottom:8px">Minors in Statistics and English &middot; College Station, TX</div>
       <hr class="card-divider">
       <div class="card-body">
-        <div style="color:var(--prompt-color);font-weight:700;margin:4px 0">Honors</div>
-        <div class="bullet">Eagle Scout</div>
+        <div style="color:var(--prompt-color);font-weight:700;margin:4px 0">Honors & Awards</div>
+        <div class="bullet">President's Endowed Scholar</div>
         <div class="bullet">Craig and Galen Brown Engineering Honors</div>
         <div class="bullet">University Honors</div>
-        <div class="bullet">President's Endowed Scholar</div>
+        <div class="bullet">Eagle Scout</div>
         <hr class="card-divider">
-        <div style="color:var(--prompt-color);font-weight:700;margin:4px 0">Relevant Coursework</div>
-        <div>Data Structures and Algorithms, Distributed Systems, Machine Learning, Software Engineering</div>
+        <div style="color:var(--prompt-color);font-weight:700;margin:4px 0">Key Coursework</div>
+        <div>Distributed Systems, Machine Learning, Data Structures & Algorithms, Software Engineering</div>
       </div>
     </div>` },
     '',
@@ -337,7 +336,9 @@ registerCommand('contact', 'Contact information', () => {
   return [
     '',
     { html: `<div class="output-card">
-      <div class="card-title" style="margin-bottom:8px">Let's connect!</div>
+      <div class="card-title" style="margin-bottom:4px">Get in Touch</div>
+      <div style="color:var(--text-dim);margin-bottom:10px;font-size:0.9em">Open to full-time roles, contract work, and interesting collaborations.</div>
+      <hr class="card-divider">
       <div class="card-body">
         <div style="margin:4px 0">Email &nbsp;&nbsp;&nbsp;&nbsp; <a href="mailto:sallure12345@tamu.edu">sallure12345@tamu.edu</a></div>
         <div style="margin:4px 0">Phone &nbsp;&nbsp;&nbsp;&nbsp; <a href="tel:832-715-9765">832-715-9765</a></div>
@@ -389,14 +390,14 @@ registerCommand('neofetch', 'System info — Eric Liu edition', () => {
     '',
     { html: '<span style="color:var(--accent)">      ███████╗██████╗ ██╗ ██████╗</span>     <span class="heading" style="border:none;padding:0;margin:0">eric@liu</span>' },
     { html: '<span style="color:var(--accent)">      ██╔════╝██╔══██╗██║██╔════╝</span>     ─────────────' },
-    { html: '<span style="color:var(--accent)">      █████╗  ██████╔╝██║██║     </span>     <span style="color:var(--text-dim)">OS:</span> EricLiu OS v1.0' },
-    { html: '<span style="color:var(--accent)">      ██╔══╝  ██╔══██╗██║██║     </span>     <span style="color:var(--text-dim)">Host:</span> Texas A&M University' },
-    { html: '<span style="color:var(--accent)">      ███████╗██║  ██║██║╚██████╗</span>     <span style="color:var(--text-dim)">Kernel:</span> CS Class of 2026' },
-    { html: '<span style="color:var(--accent)">      ╚══════╝╚═╝  ╚═╝╚═╝ ╚═════╝</span>     <span style="color:var(--text-dim)">Uptime:</span> 21 years' },
-    { html: '                                      <span style="color:var(--text-dim)">Shell:</span> Go / Python / JS' },
-    { html: '                                      <span style="color:var(--text-dim)">DE:</span> VS Code + vim' },
-    { html: '                                      <span style="color:var(--text-dim)">Certs:</span> AWS SA, Azure Fund.' },
-    { html: '                                      <span style="color:var(--text-dim)">GPA:</span> 3.913' },
+    { html: '<span style="color:var(--accent)">      █████╗  ██████╔╝██║██║     </span>     <span style="color:var(--text-dim)">Role:</span> Software Engineer' },
+    { html: '<span style="color:var(--accent)">      ██╔══╝  ██╔══██╗██║██║     </span>     <span style="color:var(--text-dim)">Org:</span> Capital One' },
+    { html: '<span style="color:var(--accent)">      ███████╗██║  ██║██║╚██████╗</span>     <span style="color:var(--text-dim)">Stack:</span> Go / Python / TS / C#' },
+    { html: '<span style="color:var(--accent)">      ╚══════╝╚═╝  ╚═╝╚═╝ ╚═════╝</span>     <span style="color:var(--text-dim)">Cloud:</span> AWS (Certified SA) / Azure' },
+    { html: '                                      <span style="color:var(--text-dim)">Infra:</span> Docker / CI-CD / Fargate' },
+    { html: '                                      <span style="color:var(--text-dim)">Editor:</span> VS Code + vim' },
+    { html: '                                      <span style="color:var(--text-dim)">Edu:</span> Texas A&M, CS, 3.91 GPA' },
+    { html: '                                      <span style="color:var(--text-dim)">Status:</span> Open to opportunities' },
     '',
     { html: '      <span style="color:#ff5f57">███</span><span style="color:#febc2e">███</span><span style="color:#28c840">███</span><span style="color:#5cb8ff">███</span><span style="color:#a78bfa">███</span><span style="color:#ff79c6">███</span><span style="color:#f8f8f2">███</span><span style="color:#6272a4">███</span>' },
     '',
@@ -531,9 +532,8 @@ registerCommand('date', '', () => {
 registerCommand('hire', '', () => {
   return [
     '',
-    { html: '  Great choice!' },
-    { html: '  <a href="mailto:sallure12345@tamu.edu">sallure12345@tamu.edu</a>' },
-    { html: '  <a href="https://linkedin.com/in/eric-cb-liu" target="_blank" rel="noopener">linkedin.com/in/eric-cb-liu</a>' },
+    { html: '  I like the way you think.' },
+    { html: '  <a href="mailto:sallure12345@tamu.edu">sallure12345@tamu.edu</a> &middot; <a href="https://linkedin.com/in/eric-cb-liu" target="_blank" rel="noopener">LinkedIn</a> &middot; <a href="assets/Eric-Liu-Resume.pdf" target="_blank" rel="noopener">Resume</a>' },
     '',
   ];
 }, { hidden: true });

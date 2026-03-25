@@ -294,7 +294,7 @@
       for (const line of ASCII_BANNER) {
         printLine({ html: `<span style="color:var(--accent)">${escapeHTML(line)}</span>` });
       }
-      printLine({ html: 'Welcome! Type <span style="color:var(--accent)">help</span> to see available commands.' });
+      printLine({ html: 'Type <span style="color:var(--accent)">about</span> to learn more, or <span style="color:var(--accent)">help</span> to see all commands.' });
       printLine('');
       inputEl.focus();
       return;
@@ -348,7 +348,7 @@
       const welcomeDelay = ASCII_BANNER.length * 35 + 100;
       setTimeout(() => {
         printLine('');
-        printLine({ html: 'Welcome! Type <span style="color:var(--accent)">help</span> to see available commands.' });
+        printLine({ html: 'Type <span style="color:var(--accent)">about</span> to learn more, or <span style="color:var(--accent)">help</span> to see all commands.' });
         printLine('');
         inputEl.focus();
       }, welcomeDelay);
