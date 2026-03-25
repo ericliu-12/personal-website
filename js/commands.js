@@ -243,53 +243,29 @@ registerCommand('projects', 'Projects — usage: projects [name]', (args) => {
 });
 
 // ── skills ──
-registerCommand('skills', 'Technical skills with visual breakdown', () => {
-  const languages = [
-    { name: 'Python', level: 90 },
-    { name: 'Go', level: 85 },
-    { name: 'JavaScript', level: 85 },
-    { name: 'TypeScript', level: 80 },
-    { name: 'Java', level: 80 },
-    { name: 'SQL', level: 80 },
-    { name: 'C#', level: 75 },
-    { name: 'C++', level: 70 },
-    { name: 'R', level: 60 },
-  ];
+registerCommand('skills', 'Technical skills overview', () => {
+  const languages = ['Go', 'Python', 'JavaScript', 'TypeScript', 'Java', 'C#', 'C++', 'SQL', 'R'];
+  const frameworks = ['React', 'Angular', '.NET', 'Node.js', 'TailwindCSS', 'Flask', 'NumPy', 'pandas', 'Matplotlib'];
+  const tools = ['AWS', 'Azure', 'Docker', 'Git', 'PostgreSQL', 'MongoDB', 'Jenkins', 'Jira', 'New Relic'];
 
   const lines = [
     '',
     { html: '<span class="heading">Languages</span>' },
+    { html: '<div style="margin:6px 0">' + languages.map(l => `<span class="tech-tag">${l}</span>`).join('') + '</div>' },
+    '',
+    { html: '<span class="heading">Frameworks & Libraries</span>' },
+    { html: '<div style="margin:6px 0">' + frameworks.map(f => `<span class="tech-tag">${f}</span>`).join('') + '</div>' },
+    '',
+    { html: '<span class="heading">Infrastructure & Tools</span>' },
+    { html: '<div style="margin:6px 0">' + tools.map(t => `<span class="tech-tag">${t}</span>`).join('') + '</div>' },
+    '',
+    { html: '<span class="heading">Certifications</span>' },
+    { html: `<div class="output-card">
+      <div class="bullet">AWS Solutions Architect Associate</div>
+      <div class="bullet">Microsoft Azure Fundamentals</div>
+    </div>` },
     '',
   ];
-
-  for (const lang of languages) {
-    lines.push({ html: `<div class="skill-bar-container">
-      <span class="skill-bar-label">${lang.name}</span>
-      <div class="skill-bar-track">
-        <div class="skill-bar-fill" style="--bar-width:${lang.level}%"></div>
-      </div>
-      <span class="skill-bar-pct">${lang.level}%</span>
-    </div>` });
-  }
-
-  const frameworks = ['React', 'Angular', '.NET', 'Node.js', 'TailwindCSS', 'Flask', 'NumPy', 'pandas', 'Matplotlib'];
-  const tools = ['AWS', 'Azure', 'Git', 'PostgreSQL', 'MongoDB', 'Jira', 'Jenkins', 'Docker'];
-
-  lines.push('');
-  lines.push({ html: '<span class="heading">Frameworks & Libraries</span>' });
-  lines.push({ html: '<div style="margin:6px 0">' + frameworks.map(f => `<span class="tech-tag">${f}</span>`).join('') + '</div>' });
-
-  lines.push('');
-  lines.push({ html: '<span class="heading">Developer Tools</span>' });
-  lines.push({ html: '<div style="margin:6px 0">' + tools.map(t => `<span class="tech-tag">${t}</span>`).join('') + '</div>' });
-
-  lines.push('');
-  lines.push({ html: '<span class="heading">Certifications</span>' });
-  lines.push({ html: `<div class="output-card">
-    <div class="bullet">AWS Solutions Architect Associate</div>
-    <div class="bullet">Microsoft Azure Fundamentals</div>
-  </div>` });
-  lines.push('');
   return lines;
 });
 
